@@ -16,7 +16,7 @@ const Header = React.forwardRef<HTMLElement>((_, ref) => {
 	const [solved, setSolved] = useState(false);
 
 	const scrollToStart = () => {
-		if (!ref || typeof ref === 'function') return;
+		if (ref == null || typeof ref === 'function') return;
 
 		const { current } = ref;
 		const headerHeight = current?.clientHeight;
@@ -28,19 +28,23 @@ const Header = React.forwardRef<HTMLElement>((_, ref) => {
 
 		const { current: circleOne } = circleOneRef;
 		const { current: circleTwo } = circleTwoRef;
-		if (!circleOne || !circleTwo || !ref?.current) return;
+
+		if (!circleOne || !circleTwo) return;
+		if (ref === null || typeof ref === 'function' || !ref.current) return;
 
 		const centerX = ref.current.clientWidth / 2;
 		const centerY = ref.current.clientHeight / 2;
-		const distX = event.clientX - centerX;
-		const distY = event.clientY - centerY;
-		const distance = Math.sqrt(distX ** 2 + distY ** 2);
 
-		if (distance < 5) {
-			// Snaps circles together
+		const distToCenterX = event.clientX - centerX;
+		const distToCenterY = event.clientY - centerY;
+
+		const distanceFromCenter = Math.sqrt(Math.pow(distToCenterX, 2) + Math.pow(distToCenterY, 2));
+
+		// Snaps the circles together if close enough
+		if (distanceFromCenter < 5) {
 			circleOne.style.left = `${centerX - circleOne.offsetWidth / 2}px`;
 			circleOne.style.bottom = `${centerY}px`;
-			circleTwo.style.right = `${centerX - circleTwo.offsetWidth / 2}px`;
+			circleTwo.style.right = `${centerX - circleOne.offsetWidth / 2}px`;
 			circleTwo.style.bottom = `${centerY}px`;
 
 			setSolved(true);
@@ -50,7 +54,23 @@ const Header = React.forwardRef<HTMLElement>((_, ref) => {
 			circleTwo.style.right = `${event.clientX - circleTwo.offsetWidth / 2}px`;
 			circleTwo.style.bottom = `${ref.current.clientHeight - event.clientY}px`;
 		}
+
+		const red = Math.min(
+			bestGreen[0] + (worstGreen[0] - bestGreen[0]) * (distanceFromCenter / maxDistance),
+			worstGreen[0]
+		);
+		const green = Math.min(
+			bestGreen[1] + (worstGreen[1] - bestGreen[1]) * (distanceFromCenter / maxDistance),
+			worstGreen[1]
+		);
+		const blue = Math.min(
+			bestGreen[2] - (bestGreen[2] - worstGreen[2]) * (distanceFromCenter / maxDistance),
+			worstGreen[2]
+		);
+		ref.current.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 	};
+
+	//const circleColor = solved ? 'bg-header-close' : 'bg-gray-1';
 
 	const circleOneStyle = {
 		backgroundImage: `url(${circleOneImage})`,
