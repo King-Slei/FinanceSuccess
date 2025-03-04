@@ -17,11 +17,13 @@
 		"types": ["vite-plugin-svgr/client"],
 		"baseUrl": "./",
 		"paths": {
+			"react": [ "./node_modules/@types/react" ],
 			"@components/*": ["src/components/*"],
 			"@assets/*": ["src/assets/*"],
 			"@styles/*": ["src/sass/*"],
 			"@content/*": ["src/content/*"],
-			"@tailwind/*": ["src/tailwind/*"]
+			"@tailwind/*": ["src/tailwind/*"],
+			"@units/*": ["src/components/units/*"],
 		}
 	},
 	"include": ["./src"]
