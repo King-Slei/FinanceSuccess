@@ -19,7 +19,7 @@ function App() {
       <Routes>
         {/* Home Page */}
         <Route
-          path="/"
+          path="/FinanceSuccess"
           element={
             <>
               <Home />

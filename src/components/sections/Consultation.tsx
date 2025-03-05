@@ -5,7 +5,7 @@ const Consultation = () => {
   return (
     <div 
       className="min-h-screen flex flex-col items-center justify-center px-6 bg-cover bg-center"
-      style={{ backgroundImage: "url('/mnt/data/image.png')" }}
+      // style={{ backgroundImage: "url('/mnt/data/image.png')" }}
     >
       <h1 className="text-3xl md:text-4xl font-bold text-blue-900 text-center">
         Ready To Make A Change In Your Finance

@@ -1,9 +1,9 @@
-import { defineConfig, PluginOption } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
-import tsConfigPaths from 'vite-tsconfig-paths';
-import svgr from 'vite-plugin-svgr';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tsconfigPaths from "vite-tsconfig-paths";
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-	plugins: [reactRefresh(), tsConfigPaths() as PluginOption, svgr()],
-});
+  plugins: [react(), tsconfigPaths()],
+  base: '/FinanceSuccess/'
+})
